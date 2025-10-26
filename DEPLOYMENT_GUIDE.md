@@ -215,6 +215,7 @@ Make sure to configure your reverse proxy or load balancer to route traffic to t
 6. **Vercel Deployment Failures**: Check build logs in Vercel dashboard for specific error messages
 7. **Mixed Content Errors**: Ensure all URLs use HTTPS in production
 8. **Authentication Issues**: Verify JWT_SECRET is consistent between backend and frontend configurations
+9. **TypeScript/ESLint Errors**: If builds fail due to TypeScript or ESLint errors, you can temporarily disable ESLint during builds by adding `eslint: { ignoreDuringBuilds: true }` to your next.config.js file
 
 ## Additional Notes
 
