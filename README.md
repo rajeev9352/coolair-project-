@@ -49,13 +49,20 @@ For detailed deployment instructions, see [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE
    - Update the environment variables with your configuration
 
 4. **Run the development server**
+
+   For individual component development:
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
-   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   For all components simultaneously (requires separate terminals):
+   - Windows: Run `start-all.bat`
+   - Mac/Linux: Run `./start-all.sh`
+
+   This will start:
+   - Main Website: [http://localhost:3000](http://localhost:3000)
+   - Admin Panel: [http://localhost:3001](http://localhost:3001)
+   - Backend API: [http://localhost:5000](http://localhost:5000)
 
 ## Running Tests
 
@@ -80,12 +87,19 @@ npm test -- --coverage
 - `type-check` - Run TypeScript type checker
 - `test` - Run tests
 
+### Utility Scripts
+
+- `start-all.bat` - Windows batch script to start all services
+- `start-all.sh` - Unix shell script to start all services
+
 ## Project Structure
 
 ```
 coolair-nextjs/
+├── admin-panel/            # Admin dashboard (Next.js app)
+├── backend/                # Backend API (Express.js)
 ├── public/                 # Static files
-├── src/
+├── src/                    # Main website (Next.js app)
 │   ├── app/                # App router
 │   │   ├── api/            # API routes
 │   │   └── ...
@@ -96,6 +110,8 @@ coolair-nextjs/
 │   └── types/              # TypeScript type definitions
 ├── .env.example            # Example environment variables
 ├── next.config.js          # Next.js configuration
+├── start-all.bat           # Windows startup script
+├── start-all.sh            # Unix startup script
 ├── tailwind.config.js      # Tailwind CSS configuration
 └── tsconfig.json           # TypeScript configuration
 ```
