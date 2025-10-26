@@ -2,6 +2,14 @@
 
 This guide explains how to deploy the CoolAir project with separate URLs for the main website and admin panel.
 
+## Prerequisites
+
+Before deploying, make sure you have:
+1. A GitHub account with the repository
+2. Domain names for your main website and admin panel (optional but recommended)
+3. A hosting provider for the backend API
+4. Database credentials if using PostgreSQL
+
 ## Project Structure
 
 - Main Website: Root directory (Next.js app)
@@ -11,6 +19,13 @@ This guide explains how to deploy the CoolAir project with separate URLs for the
 ## Deployment Options
 
 ### Option 1: Vercel Deployment (Recommended)
+
+Vercel is the ideal platform for deploying Next.js applications. Here are specific instructions for deploying each component:
+
+#### Prerequisites
+1. Create accounts on [Vercel](https://vercel.com) and [Render](https://render.com) (for backend)
+2. Link your GitHub account to Vercel
+3. Purchase domain names for your main website and admin panel (optional but recommended)
 
 #### Prerequisites
 1. GitHub account with the project repository
@@ -42,20 +57,30 @@ This guide explains how to deploy the CoolAir project with separate URLs for the
 5. Click "Deploy"
 
 #### Deploy Backend API
-1. You can deploy the backend to platforms like:
-   - Render
-   - Heroku
-   - DigitalOcean App Platform
-   - AWS Elastic Beanstalk
-   - Google Cloud Run
 
-2. Environment variables needed:
+We recommend using Render for deploying the backend API due to its simplicity and PostgreSQL support.
+
+1. Sign up at [Render](https://render.com)
+2. Click "New Web Service"
+3. Connect your GitHub repository
+4. Set the following configuration:
+   - Build command: `cd backend && npm install && npm run build`
+   - Start command: `cd backend && npm start`
+   - Environment: Node
+   - Plan: Free or Starter
+5. Add environment variables:
    ```
    PORT=5000
-   USE_POSTGRESQL=false  # or true if using PostgreSQL
-   JWT_SECRET=your_jwt_secret_key
-   CORS_ORIGIN=https://your-main-app.vercel.app,https://your-admin-panel.vercel.app
+   USE_POSTGRESQL=true
+   DB_NAME=your_production_database_name
+   DB_USER=your_database_user
+   DB_PASS=your_secure_database_password
+   DB_HOST=your_database_host
+   DB_PORT=5432
+   JWT_SECRET=your_secure_jwt_secret_min_32_chars_long
+   CORS_ORIGIN=https://your-main-website-domain.com,https://your-admin-panel-domain.com
    ```
+6. Click "Create Web Service"
 
 ### Option 2: Manual Deployment
 
@@ -135,26 +160,39 @@ This guide explains how to deploy the CoolAir project with separate URLs for the
 
 ## Environment Variables
 
-### Main Website (.env.local)
+Production environment files have been created in the repository:
+
+1. Main Website: `.env.production` in the root directory
+2. Admin Panel: `.env.production` in the `/admin-panel` directory
+3. Backend API: `.env.production` in the `/backend` directory
+
+Update these files with your actual values before deployment.
+
+### Main Website (.env.production)
 ```
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
-BACKEND_URL=http://localhost:5000
+NEXT_PUBLIC_APP_URL=https://your-main-website-domain.com
+NEXT_PUBLIC_API_BASE_URL=https://your-backend-domain.com
+BACKEND_URL=https://your-backend-domain.com
 ```
 
-### Admin Panel (.env.local)
+### Admin Panel (.env.production)
 ```
-NEXT_PUBLIC_APP_URL=http://localhost:3001
-NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
-BACKEND_URL=http://localhost:5000
+NEXT_PUBLIC_APP_URL=https://your-admin-panel-domain.com
+NEXT_PUBLIC_API_BASE_URL=https://your-backend-domain.com
+BACKEND_URL=https://your-backend-domain.com
 ```
 
-### Backend (.env)
+### Backend (.env.production)
 ```
 PORT=5000
-USE_POSTGRESQL=false
-JWT_SECRET=coolair_jwt_secret
-CORS_ORIGIN=http://localhost:3000,http://localhost:3001
+USE_POSTGRESQL=true
+DB_NAME=your_production_database_name
+DB_USER=your_database_user
+DB_PASS=your_secure_database_password
+DB_HOST=your_database_host
+DB_PORT=5432
+JWT_SECRET=your_secure_jwt_secret_min_32_chars_long
+CORS_ORIGIN=https://your-main-website-domain.com,https://your-admin-panel-domain.com
 ```
 
 ## Running Applications
@@ -173,9 +211,24 @@ Make sure to configure your reverse proxy or load balancer to route traffic to t
 2. **Environment Variables**: Ensure all required environment variables are set
 3. **Database Connection**: Verify database credentials if using PostgreSQL
 4. **Build Errors**: Check Node.js version compatibility
+5. **API Connection Issues**: Verify BACKEND_URL is correctly set in frontend applications
+6. **Vercel Deployment Failures**: Check build logs in Vercel dashboard for specific error messages
+7. **Mixed Content Errors**: Ensure all URLs use HTTPS in production
+8. **Authentication Issues**: Verify JWT_SECRET is consistent between backend and frontend configurations
 
 ## Additional Notes
 
 - The project uses an in-memory database by default for development
 - For production, it's recommended to use PostgreSQL
 - Make sure to set strong JWT secrets in production
+- Always use HTTPS in production environments
+- Regularly update dependencies to ensure security
+
+## Conclusion
+
+After following these deployment instructions, you will have:
+1. Main website running on its own domain/subdomain
+2. Admin panel running on a separate domain/subdomain
+3. Backend API running on its own domain/subdomain
+
+Each component can be scaled and managed independently, providing flexibility for future development and maintenance.
