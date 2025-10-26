@@ -1,0 +1,26 @@
+{
+  "name": "CoolAir",
+  "short_name": "CoolAir",
+  "description": "Modern E-commerce Store",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/images/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait",
+  "categories": ["shopping", "ecommerce"],
+  "screenshots": [],
+  "prefer_related_applications": false
+}
