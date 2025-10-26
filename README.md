@@ -1,6 +1,14 @@
 # CoolAir - Modern Air Conditioning Solutions
 
-A modern, responsive website for CoolAir, built with Next.js, TypeScript, and Tailwind CSS.
+A complete solution with a customer-facing website and admin panel, built with Next.js, TypeScript, and Tailwind CSS.
+
+## Project Structure
+
+- `/` - Main customer-facing website
+- `/admin-panel` - Admin dashboard for managing content
+- `/backend` - REST API backend (Express.js)
+
+For detailed deployment instructions, see [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md).
 
 ## Features
 
